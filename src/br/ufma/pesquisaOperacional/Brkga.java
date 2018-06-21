@@ -9,10 +9,12 @@ public class Brkga {
 	//parametros fixos
 	private static final double _taxaDeCruzamento = 0.4;
 	private static final double _taxaDeMutacao = 0.0015;
-	private static final int _tamTorneio = 5;
+	//private static final int _tamTorneio = 5;
 	private static final boolean _elitismo = true;
-	private static int mutacoes = 0;
+	//private static int mutacoes = 0;
 	private static Individuo[] elite;
+	private static int _numVert = 0;
+	private static int _numCor = 0;
 
 	/*Brkga(int populacao, float taxaDeCruzamento, float taxaDeMutacao){
 		this.populacao = populacao;
@@ -22,10 +24,12 @@ public class Brkga {
 
 	//funcao geral do nosso algoritmo sera evoluir as gen
 	//afim  de obtermos as melhores solucoes possiveis
-	public static Populacao evoluirPopulacao(Populacao populacao){
+	public static Populacao evoluirPopulacao(Populacao populacao, int numVert, int numCor, int[][] arestas){
 		//uma nova populacao deve ser iniciada, essa por sua vez
 		//contera a elite da gen anterior, mas os filhos e mutantes advindos dela
-		Populacao novaPopulacao = new Populacao(populacao.tamPopulacao(), true);
+		_numVert = numVert;
+		_numCor =  numCor;
+		Populacao novaPopulacao = new Populacao(populacao.tamPopulacao(), true, numVert, numCor, arestas);
 		//o elitismo setado como true nos da a possibilidade de sempre
 		//pegar os melhores da gen aterior como progenitores da prox
 		//aqui sao dois
@@ -59,7 +63,7 @@ public class Brkga {
 		}
 
 		//aplicacao da mutacao
-		mutacoes = 0;
+		//mutacoes = 0;
 		//tambem exclui a elite, porem pega seus filhos
 		for (int i = corteDaElite; i < novaPopulacao.tamPopulacao(); i++) {
 			if(Math.random() < _taxaDeMutacao){
@@ -71,7 +75,7 @@ public class Brkga {
 	//funcao de crossover
 	public static Individuo crossover(Individuo pai1, Individuo pai2){
 		//criando uma nova instancia filha
-		Individuo filho = new Individuo();
+		Individuo filho = new Individuo(_numVert, _numCor);
 
 		//pegando a posicao de inicio e de fim dos genes a serem copiados
 		//para o filho
@@ -109,7 +113,7 @@ public class Brkga {
 		Random gerador = new Random();
 		for (int i = 0; i < individuo.tamCromossomo(); i++) {
 			if (Math.random() < _taxaDeMutacao) {
-				mutacoes++;
+				//mutacoes++;
 				int corCromossomica = gerador.nextInt(GerenteDeGrafo.numCores()) /*Math.random(GerenteDeGrafo.numCores())*/;
 				individuo.setCorCromossomica(i, corCromossomica);
 			}

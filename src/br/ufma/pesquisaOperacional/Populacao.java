@@ -7,13 +7,15 @@ public class Populacao {
 	//solucoes para o problema de coloracao
 
 	//contrutor de populacao
-	public Populacao(int tamPopulacao, boolean inicializar){
+	public Populacao(int tamPopulacao, boolean inicializar, int numVert, int numCor, int[][] gArestas){
 		this._coloracao = new Individuo[tamPopulacao];
 		if (inicializar) {//incializar setada como verdade incia a criacao dos individuos para a populacao
 			//loop para a criacao dos individuos
 			for(int i = 0; i < tamPopulacao(); i++){
-				Individuo individuo = new Individuo();
+				Individuo individuo = new Individuo(numVert, numCor);
 				individuo.gerarIndividuo();
+				//corrigir genoma
+				individuo.corrigirGenoma(individuo, gArestas);
 				salvarColoracao(i, individuo);
 			}	
 		}

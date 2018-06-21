@@ -9,13 +9,16 @@ public class Individuo {
 	private double   _fitness = 0;
 	private double   _cores = 0;
 	private int   _maxColors = 0; 
+	private int _numVert = 0;
 
 	//construtores
-	public Individuo(/*int numVert, int numCor*/){
-		for (int i = 0; i < GerenteDeGrafo.numVertices(); i++){
+	public Individuo(int numVert, int numCor){
+		_numVert = numVert;
+		for (int i = 0; i < numVert; i++){
 			this._cromossomo.add(Integer.MIN_VALUE);
 		}
-		this._maxColors = GerenteDeGrafo.numCores();
+		//this._maxColors = GerenteDeGrafo.numCores();
+		this._maxColors = numCor;
 	}
 
 	public Individuo(ArrayList<Integer> cromossomo){
@@ -47,25 +50,39 @@ public class Individuo {
 		*se isso nao puder acontecer nenhum idividuo dessa geracao
 		o fara entao nossa populacao nao pode melhorar a solucao do problema
 	*/
-	public void corrigirGenoma(Individuo individuo){
-		int [][] gArestas = GerenteDeGrafo.arestas();
-		for (int i = 0; i < GerenteDeGrafo.numVertices(); i++){
-			for (int j = 0; j < GerenteDeGrafo.numVertices(); j++){
-				int cor1 = individuo.getCorCromossomica(i);
-				int cor2 = individuo.getCorCromossomica(j);
-				if(gArestas[i][j] == 1 && cor1 == cor2){
-					if(cor1 > 0){
-						cor2 = cor1 - 1;
-						individuo.setCorCromossomica(j, cor2);
-					}else{
-						cor2 = cor1 + 1;
-						individuo.setCorCromossomica(j, cor2);
+	public void corrigirGenoma(Individuo individuo, int[][] gArestas){
+		//int [][] gArestas = GerenteDeGrafo.arestas();
+		for (int i = 0; i < _numVert; i++){
+			for (int j = 0; j < _numVert; j++){
+				if(gArestas[i][j] == 1){ 
+					int cor1 = individuo.getCorCromossomica(i);
+					int cor2 = individuo.getCorCromossomica(j);
+					if(cor1 == cor2){
+						int maiorCor = cor2; 
+						int menorCor = cor2;
+						//ArrayList<Integer> coresAdj = new ArrayList<Integer>();
+						for(int k = 0; k < _numVert; k++){
+							if(gArestas[j][k] == 1){
+								if(maiorCor < individuo.getCorCromossomica(k)){
+									int tmp = maiorCor;
+									maiorCor = individuo.getCorCromossomica(k);
+									menorCor = tmp;
+								}
+							}
+						}
+
+						if(menorCor > 0){
+							cor2 = menorCor - 1;
+							individuo.setCorCromossomica(j, cor2);
+						}else{
+							cor2 = maiorCor + 1;
+							individuo.setCorCromossomica(j, cor2);
+						}
 					}
 				}
 			}
 
 		}
-		return individuo;
 	}
 
 	//getters e setters

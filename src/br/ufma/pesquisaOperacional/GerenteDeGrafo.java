@@ -1,7 +1,11 @@
 package br.ufma.pesquisaOperacional;
 
 public class GerenteDeGrafo {
-	private static Grafo _grafo = new Grafo();
+	private static Grafo _grafo;
+	
+	GerenteDeGrafo(Grafo grafo){
+		_grafo = grafo;
+	}
 
 	public static int numVertices(){
 		return _grafo.numVertices;
@@ -18,4 +22,5 @@ public class GerenteDeGrafo {
 	public static int[][] arestas(){
 		return _grafo.arestas;
 	}
+	
 }
