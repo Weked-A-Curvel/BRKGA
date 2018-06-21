@@ -15,6 +15,7 @@ public class Grafo {
 
 	public Grafo(int numVert){
 		this.numDeCores = numVert;
+		this.numVertices = numVert;
 		this.arestas = new int[numVert][numVert];
 		this._cores = new ArrayList<Integer>();
 		for (int i = 0; i < numVert; i++) {

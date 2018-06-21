@@ -57,7 +57,7 @@ public class Brkga {
 				//de uma mesma chave aleatoria anterior e feita aqui;
 				int positPai1 = gerador.nextInt(2);
 				//int positPai2 = i;
-				Individuo filho = crossover(elite[positPai1], populacao.getColoracao(positPai1));			
+				Individuo filho = crossover(elite[positPai1], populacao.getColoracao(i));			
 				novaPopulacao.salvarColoracao(i, filho);
 			}
 		}
@@ -114,7 +114,7 @@ public class Brkga {
 		for (int i = 0; i < individuo.tamCromossomo(); i++) {
 			if (Math.random() < _taxaDeMutacao) {
 				//mutacoes++;
-				int corCromossomica = gerador.nextInt(GerenteDeGrafo.numCores()) /*Math.random(GerenteDeGrafo.numCores())*/;
+				int corCromossomica = gerador.nextInt(_numCor) /*Math.random(GerenteDeGrafo.numCores())*/;
 				individuo.setCorCromossomica(i, corCromossomica);
 			}
 		}

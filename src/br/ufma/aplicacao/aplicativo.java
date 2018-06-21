@@ -69,18 +69,18 @@ public class aplicativo {
 		
 		while(cont < arquivos.size()){
 			try {
-				FileReader file = new FileReader("teste1.txt");
+				FileReader file = new FileReader(arquivos.get(cont));
 				
 				Scanner scanner2 = new Scanner(file);
 				Scanner scanner = scanner2;
 				String p = scanner.next();
-				System.out.println(p);
+				//System.out.println(p);
 				String edge = scanner.next();
-				System.out.println(edge);
+				//System.out.println(edge);
 				int numVert = scanner.nextInt();
-				System.out.println("numero Total De Vertices: " + numVert);
+				//System.out.println("numero Total De Vertices: " + numVert);
 				int numArst = scanner.nextInt();
-				System.out.println("numero Total De Arestas: " + numArst);
+				//System.out.println("numero Total De Arestas: " + numArst);
 
 				grafo = new Grafo(numVert);
 
@@ -88,6 +88,9 @@ public class aplicativo {
 					String ignore = scanner.next();
 					int v1 = scanner.nextInt();
 					int v2 = scanner.nextInt();
+					
+					v1 = v1 - 1;
+					v2 = v2 - 1;
 					grafo.addAresta(v1, v2);
 				}
 				
@@ -103,9 +106,9 @@ public class aplicativo {
 
 			long tempoInicial = System.currentTimeMillis();
 
-			Populacao populacao = new Populacao(500, true, grafo.getNumVert(), grafo.getNumCores(), grafo.getArestas());
+			Populacao populacao = new Populacao(10, true, grafo.getNumVert(), grafo.getNumCores(), grafo.getArestas());
 
-			for (int i = 0; i < 1500; i++) {
+			for (int i = 0; i < 20; i++) {
 				populacao = Brkga.evoluirPopulacao(populacao, grafo.getNumVert(), grafo.getNumCores(), grafo.getArestas());
 			}
 
@@ -115,9 +118,11 @@ public class aplicativo {
 			for(int i = 0; i < ind[0].tamCromossomo(); i++){
 				System.out.println("Vertice "+ i + ":"+ "cor "+ind[0].getCorCromossomica(i));
 			}
+			System.out.println(arquivos.get(cont));
+			
 			System.out.println("Cores Usadas: " + ind[0].getCores());
 
-			System.out.println("Tempo Total: "+(System.currentTimeMillis()-tempoInicial));
+			System.out.println("Tempo Total: "+(System.currentTimeMillis()-tempoInicial)+"\n\n");
 
 			cont++;
 		}
